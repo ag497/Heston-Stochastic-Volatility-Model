@@ -12,7 +12,7 @@ The Heston Option Pricing Model provides a more realistic framework for pricing 
 
 1. **Stochastic Processes**: The Heston Model assumes that both asset price and its variance follow stochastic processes.
    
-2. **Correlation**: There exists correlation between asset price and its variance.
+2. **Correlation**: There exists negative correlation between asset price and its variance.
    
 3. **Mean-Reverting Variance**: The variance process follows a mean-reverting stochastic process, specifically modeled using the CIR (Cox-Ingersoll-Ross) process. This reflects the empirical observation that volatility tends to return to its average level over time.
 
@@ -114,3 +114,38 @@ One key advantage of using characteristic functions in the context of the Heston
 
 This analytical tractability is a significant advantage compared to alternative methods, such as Monte Carlo simulation, especially when pricing complex derivatives or performing risk management calculations in real-time.
 
+### Heston In Detail
+
+## Stochastic Volatility Equation Derivation 
+Ornstein-Uhlenbeck Process (used to derive stochastic variance equation of Heston) aka Mean Reverting Process
+
+dh(t) = -βh(t)dt + σdW(t )
+
+V = h(t)²
+
+Applying Ito's Lemma to Ornstein Uhlenbeck Process,
+
+∂V / ∂t = 0 as variance is a function of h(t)
+
+∂V / ∂h(t) = 2h(t)
+
+∂²V / ∂h(t)² = 2
+
+μ=-βh(t)
+
+σ=𝛿
+
+dV = ( 𝛿² - 2βV) dt + (2𝛿√V) dW(t)
+
+Use k=2β, θ=𝛿²/2β , σ=2𝛿
+
+dV = κ(θ - V)dt + (σ√V)dWt
+
+Hence derived stochastic volatility equation in P measure (real world probability)
+
+## Risk Neutral Valuation Equations Derivation
+The equations are in p-measure, so to price appropriately, we need to convert them to q-measure probabilities.
+
+To do so we need to convert the asset into a martingale aka make it driftless (μ=0)
+
+## 
