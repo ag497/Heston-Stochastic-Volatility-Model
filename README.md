@@ -114,7 +114,7 @@ One key advantage of using characteristic functions in the context of the Heston
 
 This analytical tractability is a significant advantage compared to alternative methods, such as Monte Carlo simulation, especially when pricing complex derivatives or performing risk management calculations in real-time.
 
-### Heston In Detail
+## Heston In Detail
 
 ## Stochastic Volatility Equation Derivation 
 Ornstein-Uhlenbeck Process (used to derive stochastic variance equation of Heston) aka Mean Reverting Process
@@ -183,17 +183,99 @@ dv(t) = (k(θ - v(t)) dt+ σ √v dW^P (t) (under p measure)
 
 dv(t) = (k(θ - v(t) - λ) dt+ σ √v dW^Q (t) (when tranformed t under q measure)
 
-λ is called the volatility risk premium term
-
 k* = k + λ
 
 θ* = (θ * k) / (k + λ)
 
 dv(t) = (k*(θ* - v(t)) dt+ σ √v dW^Q (t)
 
-##  Brief On CIR Model for Variance Process 
+λ is called the volatility risk premium term
+
+## CIR Model for Variance Process In Brief
 dv(t) = a (b - r(t)) dt + σ √(r(t))dW(t)
 
 where a is speed of mean reversion and b is long term mean
 
 a and b analogous to k and θ respectively
+
+## Cholesky Decomposition
+Cholesky Decomposition Matrix is used to convert correlated Brownian Motions into Independent Brownian Motions
+
+A Positive Definite Matrix (PDM)  has unique factorisation C = L L^T where L is lower triangular matrix with positive diagonal values
+
+This factorisation is called Cholesky Decomposition
+
+W=L*Z
+
+W is correlated (dependent) Brownian Motion Matrix 
+
+W^T = [ W1(t) , W2(t) ]
+
+Z is independent Brownian Motion Matrix 
+
+Z^T = [Z1(t) , Z2(t) ]
+
+W1(t) = Z1(t)
+
+W2(t) = ρ(1,2) Z1(t) + √ (1-ρ(1,2)^2) Z2(t)
+
+This helps deal with multidimensional asset pricing processes like with Heston Model
+
+cov[W1(t), W2(t)] = E[W1(t) W2(t)] - E[W1(t)] E[W2(t]
+
+= E[ Z1(t) (ρ(1,2) Z1(t) + √ (1-ρ(1,2)^2) Z2(t)) ] - 0
+
+because E[W1(t)] = 0 and  E[W2(t] = 0 
+
+= ρ(1,2) E[ Z1(t)^2 ] + √ (1-ρ(1,2)^2) E[ Z1(t)] E[Z2(t)]
+​
+= ρ(1,2) E[ Z1(t)^2 ] + 0
+
+because E[Z1(t)] = 0 and  E[Z2(t] = 0 
+
+= ρ(1,2) var[Z1(t)]
+
+cov[W1(t), W2(t)] = ρ(1,2) t
+
+σ̅(t,X(t))  is correlation matrix structure. Instantaneous covariance matrix representing correlation between 
+the Brownian Motions via Cholesky Decomposition.
+
+(L dZ(t)) (L dZ(t))^T = (L dZ(t) dZ(t)^T L^T)
+
+= (σ̅(t,X(t)),σ̅(t,X(t))^T) diag(dt)
+
+beacuse Z(t) dZ(t)^T = diag(dt)
+
+(L dZ(t)) (L dZ(t))^T = Cdt
+
+ Every C has unique Cholesky Decomposition  aka factorization of the form LL^T
+ 
+## FOR CORRELATED BROWNIAN SDE
+dX=μ̅ dt+ ∑̅ dW
+
+## FOR INDEPENDENT BROWNIAN SDE
+dX=μ̅ dt+ ∑̅  LdZ
+
+dX=μ̅ dt+ ∑̅  σ̅ dZ
+
+## ITO'S LEMMA For  Vector Process
+ X(t)=[ X1(t) X2(t) X3(t) X4(t) .... Xn(t)]
+ 
+ g = g(t,X(t))
+ 
+ dg(t,X(t)) = (∂g / ∂t) dt + ∑{j=1 to n}
+ (∂g / ∂Xj) dXj(t) + 1/2 ∑{i,j=1 to n}
+ (∂²g / ∂Xi ∂Xj) dXi(t) dXj(t)
+
+distinguishing for μ̅  and σ̅  :
+
+(∂g / ∂t + ∑{i=1 to n} μ̅ i(t,X(t))
+ (∂g / ∂Xi) + 1/2 ∑{i,j,k=1 to n} σ̅ i,k(t,X(t)) σ̅ j,k(t,X(t))
+ (∂²g / ∂Xi ∂Xj)) dt + ∑{i,j =1 to n} σ̅ i,j(t,X(t) (∂g / ∂Xi) dZj(t)
+
+
+ ## HESTON PRICING PDE 
+ ### Using Martingale Method
+ 
+
+
