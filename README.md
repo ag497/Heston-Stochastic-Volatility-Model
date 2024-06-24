@@ -47,7 +47,7 @@ dW₁(t ), dW₂(t) are Weiner processes under probability p representing the ra
 
 ρ is the correlation between dW₁(t ) and dW₂(t) (negative for stocks usually)
 
-Feller’s Condition:  2κθ>σ ^2 is a condition for non-negativeness of variance over time
+Feller’s Condition:  2κθ>σ ^2 is a condition for non-negativeness of variance over time to get stable solution for PDE
 
 Let v(0) be initial variance
 v(0) and θ control volatility of asset return while σ controls the kurtosis of its distribution accounting for thicker tails ( i.e. extreme movements) when its value is higher
@@ -148,4 +148,52 @@ The equations are in p-measure, so to price appropriately, we need to convert th
 
 To do so we need to convert the asset into a martingale aka make it driftless (μ=0)
 
-## 
+## Girsanov's Theorem
+Use Girsanov's Theorem to convert our equations from P probability measure to Q probability measure
+
+W^P + at = W^Q
+
+dW^P + adt = dW^Q
+
+Applying to GBM Equation in P measure:
+
+dS(t) = (μ-r) S(t) dt + σ S(t) dW^P (t)
+
+dS(t) = (μ-r) S(t) dt + σ S(t) (dW^Q (t) - adt)
+
+dS(t) = (μ-r-aσ) S(t) dt + σ S(t) dW^Q (t)
+
+For it to be a martingale drift term should be 0:
+
+(μ-r-aσ)=0 or a=μ-r/σ
+
+dS(t) =  σ S(t) dW^Q (t)
+
+W^P + (μ-r/σ) t = W^Q
+
+So our final Heston Model Equations under risk neutral valuation would be:
+
+dS(t) = μ S(t) dt + √v S(t) dW^Q (t)
+
+μ=r (expected rate of return in q measure is riskfree IR)
+
+dS(t) = r S(t) dt + √v S(t) dW^Q (t)
+
+dv(t) = (k(θ - v(t)) dt+ σ √v dW^P (t) (under p measure)
+
+dv(t) = (k(θ - v(t) - λ) dt+ σ √v dW^Q (t) (when tranformed t under q measure)
+
+λ is called the volatility risk premium term
+
+k* = k + λ
+
+θ* = (θ * k) / (k + λ)
+
+dv(t) = (k*(θ* - v(t)) dt+ σ √v dW^Q (t)
+
+##  Brief On CIR Model for Variance Process 
+dv(t) = a (b - r(t)) dt + σ √(r(t))dW(t)
+
+where a is speed of mean reversion and b is long term mean
+
+a and b analogous to k and θ respectively
