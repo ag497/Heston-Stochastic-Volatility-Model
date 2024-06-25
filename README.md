@@ -273,9 +273,37 @@ distinguishing for μ̅  and σ̅  :
  (∂g / ∂Xi) + 1/2 ∑{i,j,k=1 to n} σ̅ i,k(t,X(t)) σ̅ j,k(t,X(t))
  (∂²g / ∂Xi ∂Xj)) dt + ∑{i,j =1 to n} σ̅ i,j(t,X(t) (∂g / ∂Xi) dZj(t)
 
+ ## Martingale Method of Pricing
+ 
+ V(t)/M(t) = E^Q (V(T)/M(T))
+ 
+ V(S,v,t) = M(t) E^Q (V(S,v,T)/M(T) | F(T) )
 
- ## HESTON PRICING PDE 
- ### Using Martingale Method
+M(t) = e^(-rt) and F is filtration set 
+
+ E^Q (V(S,v,T)/M(T) | F(T) ) = V(s,v,t) / M(t) = π(S,v,t) which is a martingale
+
+ Applying Ito's Lemma to π:
+
+ dπ = d(V/M) = (1/M)dV - (rV/M)dt
+
+ dV=( ∂V/∂t + rS (∂V/∂S) + k(θ-v)(∂V/∂v) + (1/2 v S²) (∂²V/∂S²)  + (σ ρ(x,v) S v) (∂²V/∂S ∂v) + (1/2 σ² v) (∂²V/∂v²) ) dt + s√v(∂V/∂S) dW(s) + y√v(∂V/∂v) dW(v)
+
+ Making dπ free of dt term:
+
+ 1/M(( ∂V/∂t + rS (∂V/∂S) + k(θ-v)(∂V/∂v) + (1/2 v S²) (∂²V/∂S²)  + (σ ρ(x,v) S v) (∂²V/∂S ∂v) + (1/2 σ² v) (∂²V/∂v²) ) - rV/M = 0
+ 
+## HESTON PRICING PDE 
+
+∂V/∂t + rS (∂V/∂S) + k(θ-v)(∂V/∂v) + (1/2 v S²) (∂²V/∂S²)  + (σ ρ(x,v) S v) (∂²V/∂S ∂v) + (1/2 σ² v) (∂²V/∂v²)  - rV = 0
+
+Hence we have derived our  partial differentiation equation for Heston pricing
+
+## EUROPEAN OPTION PRICING WITH HESTON
+
+
+ 
+
  
 
 
